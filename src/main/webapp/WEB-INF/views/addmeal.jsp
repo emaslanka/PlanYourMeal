@@ -14,7 +14,7 @@
 </head>
 <body>
 
-<form:form method="post" modelAttribute="meal"  class="form-horizontal">
+<form:form method="post" modelAttribute="meal" class="form-horizontal">
     <fieldset>
 
 

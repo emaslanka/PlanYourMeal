@@ -15,6 +15,8 @@
 <p>Dodaj Posiłek</p>
 
 <a href="/meal/add">Dodaj Posiłek</a>
+<a href="/meal/list">Lista POsiłków</a>
+
 
 
 </body>

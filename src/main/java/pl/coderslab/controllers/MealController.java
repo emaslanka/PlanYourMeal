@@ -1,13 +1,11 @@
 package pl.coderslab.controllers;
 
 
+import org.springframework.http.StreamingHttpOutputMessage;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import pl.coderslab.entity.Category;
 import pl.coderslab.entity.Meal;
 import pl.coderslab.repository.CategoryRepository;
@@ -28,6 +26,7 @@ public class MealController {
         this.categoryRepository = categoryRepository;
     }
 
+    // ----Add meal ------------------------------------------------------------------
     @GetMapping("/add")
     public String add(Model m){
         m.addAttribute("meal", new Meal());
@@ -46,5 +45,29 @@ public class MealController {
     @ModelAttribute("categories")
     public List<Category> categories() {
         return categoryRepository.findAll();
+    }
+
+    //----List of meal ------------------------------------------------------------------------
+
+    @GetMapping("/list")
+    public String mealListForm (Model m){
+        m.addAttribute("meal", new Meal());
+        List<Meal> meals = mealRepository.findAll();
+        m.addAttribute("meals", meals);
+        return "list";
+    }
+
+    @PostMapping("/list")
+
+
+    public String mealListPost (@ModelAttribute @Valid Meal meal , BindingResult violations, Model m ){
+
+        if(violations.hasErrors()){
+            return "list";
+        }
+        List<Meal> meals = mealRepository.findByCategoryAndTimeOfPrep(meal.getCategory(),meal.getTimeOfPrep());
+
+        m.addAttribute("meals", meals);
+        return "listResult";
     }
 }
