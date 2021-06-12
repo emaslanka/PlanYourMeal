@@ -11,7 +11,7 @@ public interface MealRepository extends JpaRepository<Meal, Long> {
 
     // find meal by category and max time - those 2 values are required
 
-    @Query("select m from Meal m where m.category = ?1 and m.timeOfPrep < ?2")
+    @Query("select m from Meal m where m.category = ?1 and m.timeOfPrep <= ?2")
     List<Meal> findByCategoryAndTimeOfPrep(Category category, int timeOfPrep);
 
 }

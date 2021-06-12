@@ -19,14 +19,16 @@ public class Plan {
     private Long id;
 
 
-    @Future(message = "Podaj przyszłą datę")
+
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @Future(message = "Podaj przyszłą datę")
     private LocalDate date;
 
     @ManyToOne
     private Day day;
 
 
+    @NotNull
     @ManyToMany
     @JoinTable(name = "plans_meals",
             joinColumns = @JoinColumn(name = "plan_id"),

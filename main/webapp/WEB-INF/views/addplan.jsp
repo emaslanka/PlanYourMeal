@@ -46,8 +46,8 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="meals">Wybierz Posiłek</label>
             <div class="col-md-5">
-                <form:select type="checkbox" style="width:300px;height:350px;"   id="meals" path="meals" class="form-control" multiple="true" items = "${meals}" itemLabel="name" itemValue="id" />
-                <form:errors  path="meals"/>
+                <form:select type="checkbox"  style="width:300px;height:350px;"   id="meals" path="meals" class="form-control" multiple="true" items = "${meals}" itemLabel="name" itemValue="id"  required="true" />
+                <form:errors  path="meals" />
 
             </div>
         </div>

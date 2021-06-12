@@ -2,6 +2,7 @@ package pl.coderslab.entity;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -17,15 +18,21 @@ public class Meal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
+    @Size(max=100)
     private String name;
+
+    @NotNull
     @ManyToOne
     private Category category;
 
+    @Size(max=600)
     private String ingredients;
 
-
+    @NotNull
+    @Min(5)
+    @Max(1000)
     private int timeOfPrep;
+
     private String linkToRecipe;
 
     @ManyToMany(mappedBy = "meals")

@@ -6,6 +6,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.format.FormatterRegistry;
+import org.springframework.http.MediaType;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalEntityManagerFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -25,6 +28,9 @@ import pl.coderslab.entity.Meal;
 
 import javax.persistence.EntityManagerFactory;
 import javax.validation.Validator;
+import java.nio.charset.Charset;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 @Configuration
@@ -32,7 +38,10 @@ import java.util.Locale;
 @ComponentScan("pl.coderslab")
 @EnableTransactionManagement
 @EnableJpaRepositories("pl.coderslab.repository")
+
+
 public class AppConfig implements WebMvcConfigurer {
+
     @Bean
     public LocalEntityManagerFactoryBean entityManagerFactory() {
         LocalEntityManagerFactoryBean entityManagerFactoryBean
@@ -85,23 +94,29 @@ public class AppConfig implements WebMvcConfigurer {
         registry.addConverter(getDayConverter());
     }
 
+    //Converter for categories ---------------------------------------------------------
     @Bean
     public CategoryConverter getCategoryConverter() {
         return new CategoryConverter();
     }
 
-    // Konwerter dla posiłków -meal -------------------------------------------------------------
+    // Converter for -meal -------------------------------------------------------------
 
     @Bean
     public MealConverter getMealConverter() {
         return new MealConverter();
     }
 
-    // Konwerter dla dni -dni ---------
+    // Converter for days ---------
     @Bean
     public DayConverter getDayConverter() {
         return new DayConverter();
     }
+
+    @Override
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        StringHttpMessageConverter stringConverter = new StringHttpMessageConverter();
+        stringConverter.setSupportedMediaTypes(Arrays.asList(new MediaType("text", "html", Charset.forName("UTF-8")))); converters.add(stringConverter); }
 
 
 }

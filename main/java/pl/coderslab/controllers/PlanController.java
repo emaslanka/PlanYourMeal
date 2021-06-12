@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 
@@ -43,11 +42,10 @@ public class PlanController {
     }
 
     @PostMapping("/add")
-    public String add(@ModelAttribute @Valid Plan plan, BindingResult violations,Model m) {
+    public String add(@ModelAttribute @Valid Plan plan, BindingResult violations) {
 
-        if(violations.hasErrors()){
-            m.addAttribute("plan", new Plan());
-            return "addplan";
+        if (violations.hasErrors()) {
+            return "addplanerror";
         }
 
         planRepository.save(plan);
@@ -104,19 +102,19 @@ public class PlanController {
     @Transactional
     public String editPlanPost(@ModelAttribute Plan plan, @PathVariable long id) {
         planRepository.save(plan);
-        return "list";
+        return "redirect:../list";
     }
 
     //---------------------------delete--------------------------------------------------------------------------
 
     @GetMapping("/delete/{id}")
     @Transactional
-    public String deletePlan(Model m, @PathVariable long id) {
+    public String deletePlan(@PathVariable long id) {
         Plan plan = planRepository.getOne(id);
         Hibernate.initialize(plan.getMeals());
         planRepository.delete(plan);
 
-        return "index";
+        return "redirect:../list";
     }
 
 

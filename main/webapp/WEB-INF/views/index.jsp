@@ -16,7 +16,7 @@
 <div>
 <ul>
     <li><a href="/meal/add">Dodaj Posiłek</a></li>
-    <li><a href="/meal/list">Lista POsiłków</a></li>
+    <li><a href="/meal/list">Lista Posiłków</a></li>
     <li><a href="/plan/add">Dodaj Plan</a></li>
     <li><a href="/plan/list">Lista Planów</a></li>
 </ul>

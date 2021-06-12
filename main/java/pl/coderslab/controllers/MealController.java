@@ -30,18 +30,20 @@ public class MealController {
 
     // ----Add meal ------------------------------------------------------------------
     @GetMapping("/add")
+    @Transactional
     public String add(Model m) {
         m.addAttribute("meal", new Meal());
         return "addmeal";
     }
 
-    @PostMapping("/add")
-    public String addPost(@ModelAttribute @Valid Meal meal, BindingResult violations) {
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+
+    public String addPost(@ModelAttribute @Valid Meal meal, BindingResult violations, Model m) {
         if (violations.hasErrors()) {
-            return "addmeal";
+            return "addmealerror";
         }
         mealRepository.save(meal);
-        return "index";
+        return "redirect:./list";
     }
 
     @ModelAttribute("categories")
@@ -87,7 +89,7 @@ public class MealController {
     @Transactional
     public String editMealPost(@ModelAttribute Meal meal, @PathVariable long id) {
         mealRepository.save(meal);
-        return "index";
+        return "redirect:../list";
     }
 
     //---------------------------delete--------------------------------------------------------------------------
@@ -98,11 +100,7 @@ public class MealController {
         Meal meal = mealRepository.getOne(id);
         Hibernate.initialize(meal.getCategory());
         mealRepository.delete(meal);
-
-        m.addAttribute("meal", new Meal());
-        List<Meal> meals = mealRepository.findAll();
-        m.addAttribute("meals", meals);
-        return "list";
+        return "redirect:../list";
     }
 
 
