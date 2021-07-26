@@ -7,7 +7,7 @@ Application has following functions :
  - adding daily plan to plans base for one day
  - displaying plans between specific dates(from form) and possibility to print them.
 
-The following items has been used : 
+The following items have been used : 
 - Spring 
 - Hibernate
 - MySQL
